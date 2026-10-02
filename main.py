@@ -5,7 +5,7 @@ COMMON_PASSWORDS = {
     "123456",
     "12345678",
     "qwerty",
-    "abc123"
+    "abc123",
     "password123",
     "admin",
     "letmein",
@@ -25,7 +25,7 @@ def check_length(password):
     return len(password) >= 8
 
 def has_lowercase(password):
-    return any(char.lower() for char in password)
+    return any(char.islower() for char in password)
 
 def has_uppercase(password):
     return any(char.isupper() for char in password)
@@ -54,7 +54,16 @@ def calculate_score(password):
     if has_special_character(password):
         score += 1
 
-    return score
+    if is_common_password(password):
+        score -= 2
+
+    if has_repeated_characters(password):
+        score -= 1
+
+    if has_sequential_pattern(password):
+        score -= 1
+
+    return max(score, 0)
 
 def get_strength(score):
     if score <= 2:
@@ -65,7 +74,12 @@ def get_strength(score):
         return "Strong"
 
 def is_common_password(password):
-    return password.lower() in COMMON_PASSWORDS
+    normalized = "".join(
+        char for char in password.lower()
+        if char.isalnum()
+    )
+
+    return normalized in COMMON_PASSWORDS
 
 def has_repeated_characters(password):
     for i in range(len(password) - 2):
