@@ -15,7 +15,29 @@ def has_number(password):
 def has_special_character(password):
     return any(not char.isalnum() for char in password)
 
+def calculate_score(password):
+    score = 0
+
+    if check_length(password):
+        score += 1
+
+    if has_lowercase(password):
+        score += 1
+
+    if has_uppercase(password):
+        score += 1
+
+    if has_number(password):
+        score += 1
+
+    if has_special_character(password):
+        score += 1
+
+    return score
+
+
 password = getpass("Enter your password: ")
+score = calculate_score(password)
 
 print("\nPassword checks:")
 
@@ -27,3 +49,4 @@ print(
     f"Special character: "
     f"{'OK' if has_special_character(password) else 'Missing'}"
 )
+print(f"\nStrength score: {score}/5")
