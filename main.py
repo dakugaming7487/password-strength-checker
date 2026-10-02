@@ -35,9 +35,17 @@ def calculate_score(password):
 
     return score
 
+def get_strength(score):
+    if score <= 2:
+        return "Weak"
+    elif score <= 4:
+        return "Medium"
+    else:
+        return "Strong"
 
 password = getpass("Enter your password: ")
 score = calculate_score(password)
+strength = get_strength(score)
 
 print("\nPassword checks:")
 
@@ -50,3 +58,4 @@ print(
     f"{'OK' if has_special_character(password) else 'Missing'}"
 )
 print(f"\nStrength score: {score}/5")
+print(f"Strength: {strength}")
