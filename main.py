@@ -1,4 +1,5 @@
 from getpass import getpass
+import math
 
 COMMON_PASSWORDS = {
     "password",
@@ -138,8 +139,29 @@ def has_sequential_pattern(password):
 
     return False
 
+def calculate_entropy(password):
+    character_set_size = 0
+
+    if any(char.islower() for char in password):
+        character_set_size += 26
+
+    if any(char.isupper() for char in password):
+        character_set_size += 26
+
+    if any(char.isdigit() for char in password):
+        character_set_size += 10
+
+    if any(not char.isalnum() for char in password):
+        character_set_size += 32
+
+    if character_set_size == 0:
+        return 0
+
+    return len(password) * math.log2(character_set_size)
+
 password = getpass("Enter your password: ")
 score = calculate_score(password)
+entropy = calculate_entropy(password)
 strength = get_strength(score, password)
 common = is_common_password(password)
 repeated = has_repeated_characters(password)
@@ -157,6 +179,7 @@ print(
     f"{'OK' if has_special_character(password) else 'Missing'}"
 )
 print(f"\nStrength score: {score}/7")
+print(f"Estimated entropy: {entropy:.1f} bits")
 print(f"Strength: {strength}")
 print(f"Common password: {'Yes' if common else 'no'}")
 print(f"Repeated characters: {'Yes' if repeated else 'No'}")
