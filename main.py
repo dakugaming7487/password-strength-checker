@@ -1,5 +1,16 @@
 from getpass import getpass
 
+COMMON_PASSWORDS = {
+    "password",
+    "123456",
+    "12345678",
+    "qwerty",
+    "abc123"
+    "password123",
+    "admin",
+    "letmein",
+}
+
 def check_length(password):
     return len(password) >= 8
 
@@ -43,9 +54,13 @@ def get_strength(score):
     else:
         return "Strong"
 
+def is_common_password(password):
+    return password.lower() in COMMON_PASSWORDS
+
 password = getpass("Enter your password: ")
 score = calculate_score(password)
 strength = get_strength(score)
+common = is_common_password(password)
 
 print("\nPassword checks:")
 
@@ -57,5 +72,6 @@ print(
     f"Special character: "
     f"{'OK' if has_special_character(password) else 'Missing'}"
 )
+print(f"Common password: {'Yes' if common else 'no'}")
 print(f"\nStrength score: {score}/5")
 print(f"Strength: {strength}")
