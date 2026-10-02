@@ -73,6 +73,35 @@ def get_strength(score):
     else:
         return "Strong"
 
+def get_feedback(password):
+    feedback = []
+
+    if not check_length(password):
+        feedback.append("Use at least 8 characters.")
+
+    if not has_lowercase(password):
+        feedback.append("Add a lowercase letter.")
+
+    if not has_uppercase(password):
+        feedback.append("Add an uppercase letter.")
+
+    if not has_number(password):
+        feedback.append("Add a number.")
+
+    if not has_special_character(password):
+        feedback.append("Add a special character.")
+
+    if is_common_password(password):
+        feedback.append("Avoid common or easily guessed passwords.")
+
+    if has_repeated_characters(password):
+        feedback.append("Avoid repeating the same character three or more times.")
+
+    if has_sequential_pattern(password):
+        feedback.append("Avoid predictable sequences like 1234 or abcd.")
+
+    return feedback
+
 def is_common_password(password):
     normalized = "".join(
         char for char in password.lower()
@@ -103,6 +132,7 @@ strength = get_strength(score)
 common = is_common_password(password)
 repeated = has_repeated_characters(password)
 sequential = has_sequential_pattern(password)
+feedback = get_feedback(password)
 
 print("\nPassword checks:")
 
@@ -119,3 +149,10 @@ print(f"Strength: {strength}")
 print(f"Common password: {'Yes' if common else 'no'}")
 print(f"Repeated characters: {'Yes' if repeated else 'No'}")
 print(f"Sequential pattern: {'Yes' if sequential else 'No'}")
+print("\nSuggestions:")
+
+if feedback:
+    for suggestion in feedback:
+        print(f"- {suggestion}")
+else:
+    print("- No obvious issues detected.")
