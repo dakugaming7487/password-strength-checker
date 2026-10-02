@@ -24,6 +24,18 @@ COMMON_SEQUENCES = {
 def check_length(password):
     return len(password) >= 8
 
+def get_lenth_score(password):
+    length = len(password)
+
+    if length < 8:
+        return 0
+    elif length < 12:
+        return 1
+    elif length < 16:
+        return 2
+    else:
+        return 3
+
 def has_lowercase(password):
     return any(char.islower() for char in password)
 
@@ -39,8 +51,7 @@ def has_special_character(password):
 def calculate_score(password):
     score = 0
 
-    if check_length(password):
-        score += 1
+    score += get_lenth_score(password)
 
     if has_lowercase(password):
         score += 1
@@ -65,13 +76,14 @@ def calculate_score(password):
 
     return max(score, 0)
 
-def get_strength(score):
-    if score <= 2:
-        return "Weak"
-    elif score <= 4:
+def get_strength(score, password):
+    if not check_length(password):
+        return "weak"
+
+    if score <= 4:
         return "Medium"
-    else:
-        return "Strong"
+
+    return "Strong"
 
 def get_feedback(password):
     feedback = []
@@ -128,7 +140,7 @@ def has_sequential_pattern(password):
 
 password = getpass("Enter your password: ")
 score = calculate_score(password)
-strength = get_strength(score)
+strength = get_strength(score, password)
 common = is_common_password(password)
 repeated = has_repeated_characters(password)
 sequential = has_sequential_pattern(password)
@@ -144,7 +156,7 @@ print(
     f"Special character: "
     f"{'OK' if has_special_character(password) else 'Missing'}"
 )
-print(f"\nStrength score: {score}/5")
+print(f"\nStrength score: {score}/7")
 print(f"Strength: {strength}")
 print(f"Common password: {'Yes' if common else 'no'}")
 print(f"Repeated characters: {'Yes' if repeated else 'No'}")
