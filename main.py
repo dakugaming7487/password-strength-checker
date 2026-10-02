@@ -159,39 +159,57 @@ def calculate_entropy(password):
 
     return len(password) * math.log2(character_set_size)
 
-password = getpass("Enter your password: ")
-score = calculate_score(password)
-entropy = calculate_entropy(password)
-strength = get_strength(score, password)
-common = is_common_password(password)
-repeated = has_repeated_characters(password)
-sequential = has_sequential_pattern(password)
-feedback = get_feedback(password)
+def main():
+    while True:
+        password = getpass("\nEnter your password: ")
 
-print("\n" + "=" * 35)
-print("       PASSWORD ANALYSIS")
-print("=" * 35)
+        score = calculate_score(password)
+        strength = get_strength(score, password)
+        common = is_common_password(password)
+        repeated = has_repeated_characters(password)
+        sequential = has_sequential_pattern(password)
+        feedback = get_feedback(password)
+        entropy = calculate_entropy(password)
 
-print(f"\nStrength: {strength}")
-print(f"Score: {score}/7")
-print(f"Estimated entropy: {entropy:.1f} bits")
+        print("\n" + "=" * 35)
+        print("       PASSWORD ANALYSIS")
+        print("=" * 35)
 
-print("\nChecks:")
-print(f"  Length:             {'OK' if check_length(password) else 'Missing'}")
-print(f"  Lowercase:          {'OK' if has_lowercase(password) else 'Missing'}")
-print(f"  Uppercase:          {'OK' if has_uppercase(password) else 'Missing'}")
-print(f"  Number:             {'OK' if has_number(password) else 'Missing'}")
-print(f"  Special character:  {'OK' if has_special_character(password) else 'Missing'}")
-print(f"  Common password:    {'Yes' if common else 'No'}")
-print(f"  Repeated characters:{' Yes' if repeated else ' No'}")
-print(f"  Sequential pattern: {'Yes' if sequential else 'No'}")
+        print(f"\nStrength: {strength}")
+        print(f"Score: {score}/7")
+        print(f"Estimated entropy: {entropy:.1f} bits")
 
-print("\nSuggestions:")
+        print("\nChecks:")
+        print(f"  Length:             {'OK' if check_length(password) else 'Missing'}")
+        print(f"  Lowercase:          {'OK' if has_lowercase(password) else 'Missing'}")
+        print(f"  Uppercase:          {'OK' if has_uppercase(password) else 'Missing'}")
+        print(f"  Number:             {'OK' if has_number(password) else 'Missing'}")
+        print(f"  Special character:  {'OK' if has_special_character(password) else 'Missing'}")
+        print(f"  Common password:    {'Yes' if common else 'No'}")
+        print(f"  Repeated characters:{' Yes' if repeated else ' No'}")
+        print(f"  Sequential pattern: {'Yes' if sequential else 'No'}")
 
-if feedback:
-    for suggestion in feedback:
-        print(f"  - {suggestion}")
-else:
-    print("  - No obvious issues detected.")
+        print("\nSuggestions:")
 
-print("\n" + "=" * 35)
+        if feedback:
+            for suggestion in feedback:
+                print(f"  - {suggestion}")
+        else:
+            print("  - No obvious issues detected.")
+
+        print("\n" + "=" * 35)
+
+        while True:
+            again = input("\nCheck another password? (y/n): ").strip().lower()
+
+            if again in ("y", "n"):
+                break
+
+            print("Please enter 'y' or 'n'")
+
+        if again == "n":
+            print("Goodbye!")
+            break
+
+if __name__ == "__main__":
+    main()
