@@ -57,10 +57,18 @@ def get_strength(score):
 def is_common_password(password):
     return password.lower() in COMMON_PASSWORDS
 
+def has_repeated_characters(password):
+    for i in range(len(password) - 2):
+        if password[i] == password[i + 1] == password[i + 2]:
+            return True
+
+    return False
+
 password = getpass("Enter your password: ")
 score = calculate_score(password)
 strength = get_strength(score)
 common = is_common_password(password)
+repeated = has_repeated_characters(password)
 
 print("\nPassword checks:")
 
@@ -72,6 +80,7 @@ print(
     f"Special character: "
     f"{'OK' if has_special_character(password) else 'Missing'}"
 )
-print(f"Common password: {'Yes' if common else 'no'}")
 print(f"\nStrength score: {score}/5")
 print(f"Strength: {strength}")
+print(f"Common password: {'Yes' if common else 'no'}")
+print(f"Repeated characters: {'Yes' if repeated else 'No'}")
