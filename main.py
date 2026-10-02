@@ -11,6 +11,16 @@ COMMON_PASSWORDS = {
     "letmein",
 }
 
+COMMON_SEQUENCES = {
+    "1234",
+    "2345",
+    "3456",
+    "abcd",
+    "bcde",
+    "cdef",
+    "qwerty",
+}
+
 def check_length(password):
     return len(password) >= 8
 
@@ -64,11 +74,21 @@ def has_repeated_characters(password):
 
     return False
 
+def has_sequential_pattern(password):
+    password = password.lower()
+
+    for sequence in COMMON_SEQUENCES:
+        if sequence in password:
+            return True
+
+    return False
+
 password = getpass("Enter your password: ")
 score = calculate_score(password)
 strength = get_strength(score)
 common = is_common_password(password)
 repeated = has_repeated_characters(password)
+sequential = has_sequential_pattern(password)
 
 print("\nPassword checks:")
 
@@ -84,3 +104,4 @@ print(f"\nStrength score: {score}/5")
 print(f"Strength: {strength}")
 print(f"Common password: {'Yes' if common else 'no'}")
 print(f"Repeated characters: {'Yes' if repeated else 'No'}")
+print(f"Sequential pattern: {'Yes' if sequential else 'No'}")
