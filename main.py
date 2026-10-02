@@ -12,6 +12,9 @@ def has_uppercase(password):
 def has_number(password):
     return any(char.isdigit() for char in password)
 
+def has_special_character(password):
+    return any(not char.isalnum() for char in password)
+
 password = getpass("Enter your password: ")
 
 print("\nPassword checks:")
@@ -20,3 +23,7 @@ print(f"Length: {'OK' if check_length(password) else 'Missing'}")
 print(f"Lowercase: {'OK' if has_lowercase(password) else 'Missing'}")
 print(f"Uppercase: {'OK' if has_uppercase(password) else 'Missing'}")
 print(f"Number: {'OK' if has_number(password) else 'Missing'}")
+print(
+    f"Special character: "
+    f"{'OK' if has_special_character(password) else 'Missing'}"
+)
