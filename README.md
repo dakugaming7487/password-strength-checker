@@ -4,6 +4,16 @@ A simple command-line password strength checker written in Python.
 
 The program analyzes a password using several different checks and provides a strength score, an estimated entropy value, and suggestions for improvement.
 
+## Demo 
+
+### Screenshot
+
+![Password Strength Checker Demo](screenshots/image.png)
+
+### Video 
+
+[text](https://youtu.be/DWFo4bzdDzo)
+
 ## Features
 
 - Checks password length
