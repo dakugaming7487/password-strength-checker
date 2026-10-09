@@ -12,7 +12,7 @@ The program analyzes a password using several different checks and provides a st
 
 ### Video 
 
-[Watch demo on youtube](https://youtu.be/DWFo4bzdDzo)
+[Watch demo](https://github.com/user-attachments/assets/9050818a-ccc6-47d8-ad5d-c89de6f59065)
 
 ## Features
 
